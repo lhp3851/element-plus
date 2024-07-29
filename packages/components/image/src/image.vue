@@ -4,18 +4,24 @@
       <div :class="ns.e('error')">{{ t('el.image.error') }}</div>
     </slot>
     <template v-else>
-      <img
-        v-if="imageSrc !== undefined"
-        v-bind="attrs"
-        :src="imageSrc"
-        :loading="loading"
-        :style="imageStyle"
-        :class="imageKls"
-        :crossorigin="crossorigin"
-        @click="clickHandler"
-        @load="handleLoad"
-        @error="handleError"
-      />
+      <picture>
+        <source :srcset="imageSrc" type="image/webp" />
+        <source :srcset="imageSrc" type="image/png" />
+        <source :srcset="imageSrc" type="image/jpg" />
+        <source :srcset="imageSrc" type="image/svg" />
+        <img
+          v-if="imageSrc !== undefined"
+          v-bind="attrs"
+          :src="imageSrc"
+          :loading="loading"
+          :style="imageStyle"
+          :class="imageKls"
+          :crossorigin="crossorigin"
+          @click="clickHandler"
+          @load="handleLoad"
+          @error="handleError"
+        />
+      </picture>
       <div v-if="isLoading" :class="ns.e('wrapper')">
         <slot name="placeholder">
           <div :class="ns.e('placeholder')" />
